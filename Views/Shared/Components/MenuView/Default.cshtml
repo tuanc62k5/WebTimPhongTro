@@ -1,0 +1,51 @@
+@model IList<DoAn.Models.tblMenu>
+
+<header class="site-header">
+    <div class="container">
+        <nav class="navbar d-flex align-items-center justify-content-between" aria-label="Primary">
+
+            <a class="brand" href="/" aria-label="Trang chủ Tuấn Anh">
+                <img src="/img/logo.jpg" alt="Logo Tuấn Anh" class="brand_logo" />
+            </a>
+
+            <form class="navbar-search" action="/PhongTro" method="get">
+                <input type="search" name="tuKhoa" placeholder="Tìm phòng..." />
+            </form>
+
+            <div class="nav-panel" id="nav-panel">
+                <nav class="primary-nav" aria-label="Main menu">
+
+                    <ul>
+                        @foreach (var item in Model
+                            .Where(m => m.Levels == 1 && m.IsActive == true).OrderBy(m => m.MenuOrder))
+                        {
+                            var menuCon = Model
+                                .Where(m => m.ParentID == item.MenuID && m.IsActive == true)
+                                .OrderBy(m => m.MenuOrder).ToList();
+
+                            <li>
+                                <a href="@(string.IsNullOrEmpty(item.Link) ? "#" : item.Link)" data-spy>
+                                    @item.MenuName
+                                </a>
+
+                                @if (menuCon.Any())
+                                {
+                                    <ul class="submenu">
+                                        @foreach (var con in menuCon)
+                                        {
+                                            <li>
+                                                <a href="@(string.IsNullOrEmpty(con.Link) ? "#" : con.Link)">
+                                                    @con.MenuName
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+</header>
