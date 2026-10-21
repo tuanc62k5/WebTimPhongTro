@@ -1,0 +1,133 @@
+@model DoAn.Models.tblTaiKhoan
+
+@{
+    ViewData["Title"] = "Đăng ký tài khoản";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đăng ký tài khoản | Tìm Phòng Trọ</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+</head>
+
+<body class="register-page">
+    <main class="register-card">
+
+        <div class="register-brand">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Tìm Phòng Trọ</span>
+        </div>
+
+        <h1>Đăng ký tài khoản</h1>
+        <p class="register-description">
+            Tạo tài khoản để khám phá những phòng trọ phù hợp với bạn.
+        </p>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="register-alert register-alert-error" role="alert">
+                <i class="bi bi-exclamation-circle"></i>
+                <span>@ViewBag.Error</span>
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="register-alert register-alert-success" role="status">
+                <i class="bi bi-check-circle"></i>
+                <span>@TempData["Success"]</span>
+            </div>
+        }
+
+        <form asp-area="Admin" asp-controller="Register" asp-action="Index" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div class="register-field">
+                <label for="TK_HoTen">Họ và tên</label>
+                <div class="register-input">
+                    <i class="bi bi-person"></i>
+                    <input id="TK_HoTen" name="TK_HoTen" type="text" value="@Model?.TK_HoTen"
+                           placeholder="Nhập họ và tên" autocomplete="name" required />
+                </div>
+            </div>
+
+            <div class="register-field">
+                <label for="TK_TenDangNhap">Tên đăng nhập</label>
+                <div class="register-input">
+                    <i class="bi bi-person-badge"></i>
+                    <input id="TK_TenDangNhap" name="TK_TenDangNhap" type="text" value="@Model?.TK_TenDangNhap"
+                           placeholder="Nhập tên đăng nhập (không dấu, không khoảng trắng)" pattern="[a-zA-Z0-9_]+"
+                           title="Tên đăng nhập chỉ gồm chữ không dấu, số và dấu gạch dưới (_)." autocomplete="username"
+                           required />
+                </div>
+            </div>
+
+            <div class="register-field">
+                <label for="TK_MatKhau">Mật khẩu</label>
+                <div class="register-input">
+                    <i class="bi bi-lock"></i>
+                    <input id="TK_MatKhau" name="TK_MatKhau" type="password" placeholder="Nhập mật khẩu"
+                           autocomplete="new-password" required />
+                    <button type="button" class="register-toggle-password" onclick="toggleRegisterPassword()"
+                            aria-label="Hiện hoặc ẩn mật khẩu">
+                        <i id="registerEye" class="bi bi-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="register-field">
+                <label for="TK_Email">Email</label>
+                <div class="register-input">
+                    <i class="bi bi-envelope"></i>
+                    <input id="TK_Email" name="TK_Email" type="email" value="@Model?.TK_Email" placeholder="Nhập email"
+                           autocomplete="email" />
+                </div>
+            </div>
+
+            <div class="register-field">
+                <label for="TK_SoDienThoai">Số điện thoại</label>
+                <div class="register-input">
+                    <i class="bi bi-telephone"></i>
+                    <input id="TK_SoDienThoai" name="TK_SoDienThoai" type="tel" value="@Model?.TK_SoDienThoai"
+                           placeholder="Nhập số điện thoại" autocomplete="tel" />
+                </div>
+            </div>
+
+            <button type="submit" class="register-button">
+                <span>Đăng ký</span>
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </form>
+
+        <p class="register-login">
+            Đã có tài khoản?
+            <a href="/Admin/Login/Index">Đăng nhập ngay</a>
+        </p>
+    </main>
+
+    <script>
+            function toggleRegisterPassword() {
+                const input = document.getElementById("TK_MatKhau");
+                const icon = document.getElementById("registerEye");
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.className = "bi bi-eye";
+                } else {
+                    input.type = "password";
+                    icon.className = "bi bi-eye-slash";
+                }
+            }
+    </script>
+</body>
+
+</html>

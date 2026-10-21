@@ -3361,6 +3361,14 @@
       "PackagePath": "staticwebassets\\admin\\assets\\vendor\\tinymce\\tinymce.min.js"
     },
     {
+      "Id": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\css\\register.cs",
+      "PackagePath": "staticwebassets\\css\\register.cs"
+    },
+    {
       "Id": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
     },
@@ -3371,6 +3379,10 @@
     {
       "Id": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\img\\anhphong1.png",
       "PackagePath": "staticwebassets\\img\\anhphong1.png"
+    },
+    {
+      "Id": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\img\\anhphong2.png",
+      "PackagePath": "staticwebassets\\img\\anhphong2.png"
     },
     {
       "Id": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\img\\logo.jpg",

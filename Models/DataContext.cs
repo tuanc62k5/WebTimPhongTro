@@ -8,5 +8,6 @@ namespace DoAn.Models
         {    
         }
         public DbSet<tblMenu> Menus {get; set;}
+        public DbSet<tblTaiKhoan> TaiKhoans {get; set;}
     }
 }

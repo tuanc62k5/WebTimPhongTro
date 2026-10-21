@@ -1,0 +1,122 @@
+@{
+    Layout = null;
+    ViewData["Title"] = "Đăng nhập | Tìm Phòng Trọ";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+</head>
+
+<body class="login-page">
+    <main class="login-card">
+        <section class="welcome-panel">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="bi bi-house-door-fill"></i>
+                </div>
+
+                <div>
+                    <div class="brand-name">Tìm Phòng Trọ</div>
+                    <div class="brand-subtitle">Nơi bắt đầu cuộc sống mới</div>
+                </div>
+            </div>
+
+            <div class="welcome-content">
+                <h1>Chào mừng bạn<br />quay trở lại!</h1>
+                <p>Đăng nhập để tiếp tục khám phá những phòng trọ phù hợp với bạn.</p>
+            </div>
+        </section>
+
+        <section class="form-panel">
+            <div class="form-content">
+                <h2>Đăng nhập</h2>
+                <p class="description">Tiếp tục hành trình tìm phòng của bạn</p>
+
+                <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label for="username">Tên đăng nhập</label>
+                        <div class="input-box">
+                            <i class="bi bi-person"></i>
+                            <input id="username" type="text" name="TK_TenDangNhap" placeholder="Nhập tên đăng nhập"
+                                   autocomplete="username" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mật khẩu</label>
+                        <div class="input-box">
+                            <i class="bi bi-lock"></i>
+                            <input id="password" type="password" name="TK_MatKhau" placeholder="Nhập mật khẩu"
+                                   autocomplete="current-password" required />
+
+                            <button class="toggle-password" type="button" onclick="togglePassword()"
+                                    aria-label="Hiện hoặc ẩn mật khẩu">
+                                <i id="eyeIcon" class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember">
+                            <input type="checkbox" name="rememberMe" value="true" />
+                            <span>Ghi nhớ đăng nhập</span>
+                        </label>
+
+                        <a class="text-link" asp-area="Admin" asp-controller="Login" asp-action="ForgotPassword">
+                            Quên mật khẩu?
+                        </a>
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="error-message" role="alert">@ViewBag.Error</div>
+                    }
+
+                    <button type="submit" class="btn-login">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Đăng nhập</span>
+                    </button>
+                </form>
+
+                <div class="divider"><span>hoặc</span></div>
+
+                <p class="register-text">
+                    Chưa có tài khoản?
+                    <a href="/Admin/Register/Index" class="text-link">
+                        Đăng ký ngay
+                    </a>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+            function togglePassword() {
+                const password = document.getElementById("password");
+                const eyeIcon = document.getElementById("eyeIcon");
+
+                if (password.type === "password") {
+                    password.type = "text";
+                    eyeIcon.className = "bi bi-eye-slash";
+                } else {
+                    password.type = "password";
+                    eyeIcon.className = "bi bi-eye";
+                }
+            }
+    </script>
+</body>
+
+</html>
