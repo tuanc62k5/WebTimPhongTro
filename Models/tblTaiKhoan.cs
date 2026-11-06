@@ -12,7 +12,7 @@ namespace DoAn.Models
         public string TK_TenDangNhap { get; set; } = "";
         public string TK_HoTen { get; set; } = "";
         public string TK_MatKhau { get; set; } = "";
-        public string TK_SoDienThoai { get; set; } ="";
+        public string TK_DienThoai { get; set; } ="";
         public string TK_Email { get; set; } = "";
         public string TK_VaiTro { get; set; } = "NhanVien";
         public bool TK_TrangThai { get; set; } = true;

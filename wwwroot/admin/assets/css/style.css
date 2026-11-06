@@ -1258,3 +1258,23 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.sidebar-nav .nav-link {
+    background: transparent !important;
+    color: #012970 !important;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.sidebar-nav .nav-link i {
+    color: #899bbd;
+}
+
+.sidebar-nav .nav-link.active {
+    background: #f6f9ff !important;
+    color: #4154f1 !important;
+}
+
+.sidebar-nav .nav-link.active i {
+    color: #4154f1;
+}

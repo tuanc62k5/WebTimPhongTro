@@ -4,13 +4,6 @@
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
 
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                <i class="bi bi-grid"></i>
-                <span>Trang chủ</span>
-            </a>
-        </li>
-
         @if (Model != null)
         {
             @foreach (var item in Model.Where(m => m.ItemLevel == 1).OrderBy(m => m.ItemOrder))
@@ -18,19 +11,20 @@
                 var pID = item.AdminMenuID;
 
                 var sMenu = Model.Where(p => p.ItemLevel == 2 && p.ParentLevel == pID)
-                    .OrderBy(p => p.ItemOrder).ToList();
+                .OrderBy(p => p.ItemOrder).ToList();
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#@item.ItemTarget" data-bs-toggle="collapse"
-                       href="#@item.ItemTarget" aria-expanded="false">
-
-                        <i class="@item.Icon"></i>
-                        <span>@item.ItemName</span>
-                        <i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
 
                     @if (sMenu.Any())
                     {
+                        <a class="nav-link collapsed" data-bs-target="#@item.ItemTarget" data-bs-toggle="collapse"
+                           href="#@item.ItemTarget">
+
+                            <i class="@item.Icon"></i>
+                            <span>@item.ItemName</span>
+                            <i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+
                         <ul id="@item.ItemTarget" class="nav-content collapse" data-bs-parent="#sidebar-nav">
 
                             @foreach (var smn in sMenu)
@@ -44,8 +38,17 @@
                             }
                         </ul>
                     }
+                    else
+                    {
+                        <a class="nav-link" href="/@item.AreaName/@item.ControllerName/@item.ActionName">
+                            <i class="@item.Icon"></i>
+                            <span>@item.ItemName</span>
+                        </a>
+                    }
+
                 </li>
             }
         }
+
     </ul>
 </aside>

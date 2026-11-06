@@ -17,9 +17,39 @@
         </a>
     </div>
 
-    <form method="get" class="d-flex justify-content-between align-items-center mb-3">
+    <form method="get" asp-area="Admin" asp-controller="KhuVuc" asp-action="Index"
+          class="d-flex justify-content-between align-items-center mb-3">
+
+        <div class="d-flex gap-3">
+
+            <select name="Tỉnh thành" class="form-select" style="width: 160px;">
+                <option value="">-- Tất cả tỉnh thành --</option>
+                <option value="Admin" selected="@(ViewBag.VaiTro == "Admin")">Quản trị viên</option>
+                <option value="NhanVien" selected="@(ViewBag.VaiTro == "ChuTro")">Chủ trọ</option>
+                <option value="NguoiThue" selected="@(ViewBag.VaiTro == "NguoiThue")">Người thuê</option>
+            </select>
+
+            <select name="Phường xã" class="form-select" style="width: 160px;">
+                <option value="">-- Tất cả phường xã --</option>
+                <option value="true" selected="@(ViewBag.TrangThai is true)">Hoạt động
+                </option>
+                <option value="false" selected="@(ViewBag.TrangThai is false)">Bị khóa
+                </option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-funnel"></i> Lọc
+            </button>
+
+        </div>
+
+        <div>
+            <input type="text" name="keyword" value="@ViewBag.Keyword" class="form-control"
+                   placeholder="Tìm tên khu vực, tỉnh thành,..." style="width: 260px;" />
+        </div>
 
     </form>
+
     <section class="section">
         <div class="card">
             <div class="card-body pt-4">
@@ -42,13 +72,7 @@
                         {
                             <tr>
                                 <td>@item.KV_ID</td>
-                                <td class="text-left fw-bold">
-                                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Details"
-                                           asp-route-id="@item.KV_ID">
-                                        @item.KV_TenKhuVuc
-                                    </a>
-                                </td>
-                                
+                                <td class="text-left fw-bold"> @item.KV_TenKhuVuc</td>
                                 <td>@item.KV_TinhThanh</td>
                                 <td>@item.KV_PhuongXa</td>
                                 <td>@item.KV_DiaChiChiTiet</td>
@@ -56,16 +80,17 @@
                                 <td class="text-center" scope="row">
                                     <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Edit" asp-route-id="@item.KV_ID"
                                        class="btn btn-primary btn-sm" title="Sửa khu vực"><i class="bi bi-pencil"></i></a>
-                                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Delete" asp-route-id="@item.KV_ID"
-                                       class="btn btn-danger btn-sm" title="Xóa khu vực"><i class="bi bi-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Delete"
+                                       asp-route-id="@item.KV_ID" class="btn btn-danger btn-sm" title="Xóa khu vực"><i
+                                        class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-</main>
+    </main>
