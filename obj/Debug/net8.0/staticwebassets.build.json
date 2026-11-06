@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "i8qsl5RofxRv2YbFIDZ2zBrTcaGEBSw/RDfutxxWPk0=",
+  "Hash": "pmCCLHE3FgLFn8Qa5dMQEjq9pQJ29lo6DfmjczhYDUQ=",
   "Source": "DoAn",
   "BasePath": "_content/DoAn",
   "Mode": "Default",
@@ -16015,12 +16015,12 @@
       "OriginalItemSpec": "wwwroot\\css\\login.css"
     },
     {
-      "Identity": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\css\\register.cs",
+      "Identity": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\css\\register.css",
       "SourceId": "DoAn",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\",
       "BasePath": "_content/DoAn",
-      "RelativePath": "css/register.cs",
+      "RelativePath": "css/register.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -16031,7 +16031,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\register.cs"
+      "OriginalItemSpec": "wwwroot\\css\\register.css"
     },
     {
       "Identity": "D:\\Bài tập\\Thực tập chuyên ngành\\DoAn\\wwwroot\\css\\style.css",

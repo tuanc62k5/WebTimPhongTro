@@ -21,10 +21,9 @@ namespace DoAn.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string tenDangNhap, string matKhau)
+        public async Task<IActionResult> Index(string TK_TenDangNhap, string TK_MatKhau)
         {
-            var user = await _context.TaiKhoans.FirstOrDefaultAsync(x =>
-                x.TK_TenDangNhap == tenDangNhap && x.TK_MatKhau == matKhau && x.TK_TrangThai);
+            var user = await _context.TaiKhoans.FirstOrDefaultAsync(x => x.TK_TenDangNhap == TK_TenDangNhap && x.TK_MatKhau == TK_MatKhau && x.TK_TrangThai);
 
             if (user == null)
             {

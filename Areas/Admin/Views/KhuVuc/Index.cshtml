@@ -1,0 +1,71 @@
+@using DoAn.Models;
+@model IList<tblKhuVuc>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h2>Danh sách khu vực</h2>
+    </div>
+
+    <div class="mb-3">
+        <a class="btn btn-success" asp-area="Admin" asp-controller="KhuVuc" asp-action="Create">
+            <i class="bi bi-plus-circle"></i> Thêm mới khu vực
+        </a>
+    </div>
+
+    <form method="get" class="d-flex justify-content-between align-items-center mb-3">
+
+    </form>
+    <section class="section">
+        <div class="card">
+            <div class="card-body pt-4">
+
+                <table class="table table-bordered table-hover align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Tên khu vực</th>
+                            <th class="text-center">Tỉnh thành</th>
+                            <th class="text-center">Phường xã</th>
+                            <th class="text-center">Địa chỉ chi tiết</th>
+                            <th class="text-center">Ngày tạo</th>
+                            <th class="text-center">Chức năng</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.KV_ID</td>
+                                <td class="text-left fw-bold">
+                                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Details"
+                                           asp-route-id="@item.KV_ID">
+                                        @item.KV_TenKhuVuc
+                                    </a>
+                                </td>
+                                
+                                <td>@item.KV_TinhThanh</td>
+                                <td>@item.KV_PhuongXa</td>
+                                <td>@item.KV_DiaChiChiTiet</td>
+                                <td>@item.KV_NgayTao</td>
+                                <td class="text-center" scope="row">
+                                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Edit" asp-route-id="@item.KV_ID"
+                                       class="btn btn-primary btn-sm" title="Sửa khu vực"><i class="bi bi-pencil"></i></a>
+                                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Delete" asp-route-id="@item.KV_ID"
+                                       class="btn btn-danger btn-sm" title="Xóa khu vực"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+
+</main>

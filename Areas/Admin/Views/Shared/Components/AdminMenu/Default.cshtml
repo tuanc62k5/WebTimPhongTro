@@ -13,37 +13,30 @@
 
         @if (Model != null)
         {
-            @foreach (var item in Model
-                .Where(m => m.ItemLevel == 1)
-                .OrderBy(m => m.ItemOrder))
+            @foreach (var item in Model.Where(m => m.ItemLevel == 1).OrderBy(m => m.ItemOrder))
             {
-                var menuId = $"menu-{item.AdminMenuID}";
+                var pID = item.AdminMenuID;
 
-                var sMenu = Model
-                    .Where(p => p.ItemLevel == 2 && p.ParentLevel == item.AdminMenuID)
-                    .OrderBy(p => p.ItemOrder)
-                    .ToList();
+                var sMenu = Model.Where(p => p.ItemLevel == 2 && p.ParentLevel == pID)
+                    .OrderBy(p => p.ItemOrder).ToList();
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#@menuId" href="#@menuId"
-                       aria-expanded="false" aria-controls="@menuId">
+                    <a class="nav-link collapsed" data-bs-target="#@item.ItemTarget" data-bs-toggle="collapse"
+                       href="#@item.ItemTarget" aria-expanded="false">
+
                         <i class="@item.Icon"></i>
                         <span>@item.ItemName</span>
-
-                        @if (sMenu.Any())
-                        {
-                            <i class="bi bi-chevron-down ms-auto"></i>
-                        }
+                        <i class="bi bi-chevron-down ms-auto"></i>
                     </a>
 
                     @if (sMenu.Any())
                     {
-                        <ul id="@menuId" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        <ul id="@item.ItemTarget" class="nav-content collapse" data-bs-parent="#sidebar-nav">
 
                             @foreach (var smn in sMenu)
                             {
                                 <li>
-                                    <a asp-area="@smn.AreaName" asp-controller="@smn.ControllerName" asp-action="@smn.ActionName">
+                                    <a href="/@smn.AreaName/@smn.ControllerName/@smn.ActionName">
                                         <i class="bi bi-circle"></i>
                                         <span>@smn.ItemName</span>
                                     </a>
