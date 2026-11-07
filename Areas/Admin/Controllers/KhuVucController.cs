@@ -16,30 +16,42 @@ namespace DoAn.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string? tinhThanh, string? phuongXa, string? keyword)
         {
-            var kvList = _context.KhuVucs.OrderBy(kv => kv.KV_ID).ToList();
-            return View(kvList);
-        }
+            var khuVucs = await _context.KhuVucs.AsNoTracking()
+            .Select(x => new { x.KV_TinhThanh, x.KV_PhuongXa }).ToListAsync();
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-                return NotFound();
-            var kv = _context.KhuVucs.Find(id);
-            if (kv == null)
-                return NotFound();
-            return View(kv);
-        }
-        [HttpPost]
-        public IActionResult Delete(int id)
-        {
-            var delKV = _context.KhuVucs.Find(id);
-            if (delKV == null)
-                return NotFound();
-            _context.KhuVucs.Remove(delKV);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.TinhThanhs = khuVucs.Select(x => x.KV_TinhThanh)
+            .Distinct().OrderBy(x => x).ToList();
+
+            ViewBag.PhuongXaData = khuVucs.Distinct()
+            .OrderBy(x => x.KV_PhuongXa).ToList();
+
+            var query = _context.KhuVucs.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(tinhThanh))
+            {
+                query = query.Where(x => x.KV_TinhThanh == tinhThanh);
+            }
+
+            if (!string.IsNullOrWhiteSpace(phuongXa))
+            {
+                query = query.Where(x => x.KV_PhuongXa == phuongXa);
+            }
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query = query.Where(x => x.KV_TenKhuVuc.Contains(keyword) ||
+                x.KV_TinhThanh.Contains(keyword) || x.KV_PhuongXa.Contains(keyword));
+            }
+
+            var kvList = await query.OrderBy(x => x.KV_ID).ToListAsync();
+
+            ViewBag.TinhThanh = tinhThanh;
+            ViewBag.PhuongXa = phuongXa;
+            ViewBag.Keyword = keyword;
+
+            return View(kvList);
         }
 
         public IActionResult Create()
@@ -64,5 +76,73 @@ namespace DoAn.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var khuVuc = await _context.KhuVucs.FindAsync(id);
+
+            if (khuVuc == null)
+            {
+                return NotFound();
+            }
+
+            return View(khuVuc);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, tblKhuVuc model)
+        {
+            if (id != model.KV_ID)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var khuVuc = await _context.KhuVucs.FindAsync(id);
+
+            if (khuVuc == null)
+            {
+                return NotFound();
+            }
+
+            khuVuc.KV_TenKhuVuc = model.KV_TenKhuVuc;
+            khuVuc.KV_TinhThanh = model.KV_TinhThanh;
+            khuVuc.KV_PhuongXa = model.KV_PhuongXa;
+            khuVuc.KV_DiaChiChiTiet = model.KV_DiaChiChiTiet;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Cập nhật khu vực thành công.";
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+                return NotFound();
+            var kv = _context.KhuVucs.Find(id);
+            if (kv == null)
+                return NotFound();
+            return View(kv);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var delKV = _context.KhuVucs.Find(id);
+            if (delKV == null)
+                return NotFound();
+            _context.KhuVucs.Remove(delKV);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

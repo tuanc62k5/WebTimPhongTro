@@ -7,7 +7,17 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h2>Quản lý tài khoản</h2>
+        <h2 class="text-dark">Danh sách tài khoản</h2>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index"> Tổng quan</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="Admin" asp-controller="TaiKhoan" asp-action="Index"> Quản lý tài khoản</a>
+                </li>
+            </ol>
+        </nav>
     </div>
 
     <div class="mb-3">

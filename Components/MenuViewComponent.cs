@@ -16,9 +16,10 @@ namespace DoAn.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var listOfMenu = (from m in _context.Menus
-                                where (m.IsActive == true) && (m.Position == 1)
-                                select m).ToList();
+            var listOfMenu = await _context.Menus
+                .Where(m => m.IsActive == true && m.Position == 1)
+                .ToListAsync();
+
             return View("Default", listOfMenu);
         }
     }

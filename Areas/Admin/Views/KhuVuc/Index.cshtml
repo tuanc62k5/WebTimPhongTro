@@ -8,7 +8,17 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h2>Danh sách khu vực</h2>
+        <h2 class="text-dark">Danh sách khu vực</h2>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index"> Tổng quan</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Index"> Quản lý khu vực</a>
+                </li>
+            </ol>
+        </nav>
     </div>
 
     <div class="mb-3">
@@ -17,35 +27,47 @@
         </a>
     </div>
 
+    
     <form method="get" asp-area="Admin" asp-controller="KhuVuc" asp-action="Index"
           class="d-flex justify-content-between align-items-center mb-3">
 
         <div class="d-flex gap-3">
 
-            <select name="Tỉnh thành" class="form-select" style="width: 160px;">
+            <select name="tinhThanh" id="tinhThanh" class="form-select" style="width: 200px;">
                 <option value="">-- Tất cả tỉnh thành --</option>
-                <option value="Admin" selected="@(ViewBag.VaiTro == "Admin")">Quản trị viên</option>
-                <option value="NhanVien" selected="@(ViewBag.VaiTro == "ChuTro")">Chủ trọ</option>
-                <option value="NguoiThue" selected="@(ViewBag.VaiTro == "NguoiThue")">Người thuê</option>
+
+                @foreach (var tinh in ViewBag.TinhThanhs)
+                {
+                    <option value="@tinh" selected="@(ViewBag.TinhThanh?.ToString() == tinh.ToString())">@tinh</option>
+                }
             </select>
 
-            <select name="Phường xã" class="form-select" style="width: 160px;">
+            <select name="phuongXa" id="phuongXa" class="form-select" style="width: 200px;"
+                    disabled="@(string.IsNullOrEmpty(ViewBag.TinhThanh?.ToString()))">
+
                 <option value="">-- Tất cả phường xã --</option>
-                <option value="true" selected="@(ViewBag.TrangThai is true)">Hoạt động
-                </option>
-                <option value="false" selected="@(ViewBag.TrangThai is false)">Bị khóa
-                </option>
+
+                @foreach (var phuong in ViewBag.PhuongXaData)
+                {
+                    <option value="@phuong.KV_PhuongXa" data-tinh="@phuong.KV_TinhThanh"
+                            selected="@(ViewBag.PhuongXa?.ToString() == phuong.KV_PhuongXa.ToString())">@phuong.KV_PhuongXa
+                    </option>
+                }
             </select>
 
             <button type="submit" class="btn btn-primary">
                 <i class="bi bi-funnel"></i> Lọc
             </button>
 
+            <a asp-area="Admin" asp-controller="KhuVuc" asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-counterclockwise"></i> Làm mới
+            </a>
+
         </div>
 
         <div>
             <input type="text" name="keyword" value="@ViewBag.Keyword" class="form-control"
-                   placeholder="Tìm tên khu vực, tỉnh thành,..." style="width: 260px;" />
+                   placeholder="Tìm tên khu vực, tỉnh thành..." style="width: 280px;" />
         </div>
 
     </form>
@@ -94,3 +116,39 @@
         </section>
 
     </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tinhThanh = document.getElementById("tinhThanh");
+            const phuongXa = document.getElementById("phuongXa");
+
+            function locPhuongXa(reset = false) {
+                const tinhDuocChon = tinhThanh.value;
+
+                if (reset) {
+                    phuongXa.value = "";
+                }
+
+                phuongXa.disabled = tinhDuocChon === "";
+
+                Array.from(phuongXa.options).forEach(option => {
+                    if (option.value === "") {
+                        option.hidden = false;
+                        return;
+                    }
+
+                    option.hidden = option.dataset.tinh !== tinhDuocChon;
+                });
+
+                if (phuongXa.selectedOptions[0]?.hidden) {
+                    phuongXa.value = "";
+                }
+            }
+
+            tinhThanh.addEventListener("change", function () {
+                locPhuongXa(true);
+            });
+
+            locPhuongXa(false);
+        });
+    </script>

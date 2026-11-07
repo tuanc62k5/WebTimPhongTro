@@ -6,8 +6,19 @@
 <main id="main" class="main">
     <div class="pagetitle">
         <h2 class="text-success">
-            <i class="bi bi-person-plus"></i> Tạo tài khoản mới
+            <i class="bi bi-person-plus-fill"></i> Thêm tài khoản
         </h2>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index"> Tổng quan</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-area="Admin" asp-controller="TaiKhoan" asp-action="Index"> Quản lý tài khoản</a>
+                </li>
+                <li class="breadcrumb-item active">Thêm mới</li>
+            </ol>
+        </nav>
     </div>
 
     <section class="section">
@@ -20,8 +31,8 @@
                         <div
                             class="col-md-4 text-center border-end d-flex flex-column justify-content-center align-items-center">
 
-                            <img id="previewImg" src="~/img/@Model?.TK_AnhDaiDien" class="img-fluid rounded shadow-sm mb-2"
-                                 style="max-height:180px;" />
+                            <img id="previewImg" src="~/img/@Model?.TK_AnhDaiDien"
+                                 class="img-fluid rounded shadow-sm mb-2" style="max-height:180px;" />
                             <label class="form-label d-block fw-bold">Ảnh đại diện</label>
                             <select class="form-control" asp-for="TK_AnhDaiDien" onchange="previewImage()">
                                 <option value="">-- Chọn ảnh --</option>

@@ -108,6 +108,7 @@ namespace DoAn.Areas.Admin.Controllers
             if (tk == null)
                 return NotFound();
 
+            LoadImages();
             return View(tk);
         }
 
@@ -143,6 +144,7 @@ namespace DoAn.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 tk.TK_NgayTao = existing.TK_NgayTao;
+                LoadImages();
                 return View(tk);
             }
 
@@ -156,7 +158,7 @@ namespace DoAn.Areas.Admin.Controllers
 
             if (!string.IsNullOrWhiteSpace(tk.TK_MatKhau))
             {
-                existing.TK_MatKhau = tk.TK_MatKhau;
+                existing.TK_MatKhau = BCrypt.Net.BCrypt.HashPassword(tk.TK_MatKhau);
             }
 
             await _context.SaveChangesAsync();
